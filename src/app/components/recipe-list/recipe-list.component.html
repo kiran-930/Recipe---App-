@@ -1,0 +1,31 @@
+<div class="container">
+    <div class="row mb-3">
+      <div class="col-md-3 d-flex justify-content-center w-100 ">
+        <app-search-filter (searchEvent)="search($event)"></app-search-filter>
+      </div>
+    </div>
+  
+    <div class="row">
+      <div *ngIf="filteredRecipes.length === 0" class="col-md-12 text-center">
+        <p class="text-danger fw-bolder fs-1">No recipes found</p>
+      </div>
+      <div class="col-md-4 mb-4" *ngFor="let recipe of paginatedRecipes">
+        <app-recipe-card [recipe]="recipe"></app-recipe-card>
+      </div>
+    </div>
+  
+    <nav *ngIf="filteredRecipes.length > 0" aria-label="Page navigation">
+      <ul class="pagination justify-content-center">
+        <li class="page-item" [class.disabled]="currentPage === 1">
+          <a class="page-link" (click)="setPage(currentPage - 1)" href="#">Previous</a>
+        </li>
+        <li class="page-item" *ngFor="let page of [].constructor(totalPages); let pageIndex = index" [class.active]="pageIndex + 1 === currentPage">
+          <a class="page-link" (click)="setPage(pageIndex + 1)" href="#">{{ pageIndex + 1 }}</a>
+        </li>
+        <li class="page-item" [class.disabled]="currentPage === totalPages">
+          <a class="page-link" (click)="setPage(currentPage + 1)" href="#">Next</a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+  
